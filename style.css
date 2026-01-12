@@ -1,0 +1,191 @@
+/* =========================
+   Base page layout
+   ========================= */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+header {
+  padding: 10px 14px;
+  border-bottom: 1px solid #ddd;
+  font-family: Arial, sans-serif;
+}
+
+#map {
+  height: calc(100vh - 86px);
+  width: 100%;
+}
+
+.leaflet-control-container {
+  z-index: 9999;
+}
+
+/* =========================
+   Variables
+   ========================= */
+:root {
+  --tool-size: 36px;            /* ALL buttons same size */
+  --tool-gap: 2px;              /* tiny gap */
+  --tool-offset: 12px;          /* distance from right/top edge */
+
+  --custom-symbol-size: 30px;   /* ⌂ ✖ ⛶ bigger */
+  --zoom-font-size: 22px;       /* + and - bigger */
+}
+
+/* space from screen edge */
+.leaflet-top.leaflet-right {
+  padding-right: var(--tool-offset);
+  padding-top: var(--tool-offset);
+}
+
+/* unified toolbar container */
+.leaflet-control.custom-right-toolbar {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0 !important;
+}
+
+.custom-right-toolbar .tool-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tool-gap);
+  margin: 0;
+  padding: 0;
+}
+
+.custom-right-toolbar .tool-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* remove leaflet default margins inside toolbar */
+.custom-right-toolbar,
+.custom-right-toolbar .leaflet-control,
+.custom-right-toolbar .leaflet-bar,
+.custom-right-toolbar .leaflet-control-geocoder,
+.custom-right-toolbar .leaflet-control-browser-print,
+.custom-right-toolbar .leaflet-control-zoom,
+.custom-right-toolbar .leaflet-draw {
+  margin: 0 !important;
+}
+
+/* consistent width for all controls in toolbar */
+.custom-right-toolbar .leaflet-control,
+.custom-right-toolbar .leaflet-bar,
+.custom-right-toolbar .leaflet-control-zoom,
+.custom-right-toolbar .leaflet-control-geocoder,
+.custom-right-toolbar .leaflet-control-browser-print,
+.custom-right-toolbar .leaflet-draw {
+  width: var(--tool-size) !important;
+}
+
+/* plugin buttons (anchors)
+   IMPORTANT: background-color only (do not use background shorthand) */
+.custom-right-toolbar .leaflet-bar a {
+  width: var(--tool-size) !important;
+  height: var(--tool-size) !important;
+  line-height: var(--tool-size) !important;
+
+  display: block !important;
+  text-align: center;
+  box-sizing: border-box;
+
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.custom-right-toolbar .leaflet-bar a:hover {
+  background-color: #f2f2f2;
+}
+
+/* zoom +/- bigger */
+.custom-right-toolbar .leaflet-control-zoom a {
+  font-size: var(--zoom-font-size) !important;
+  font-weight: 800;
+}
+
+/* custom buttons: Home / Clear / Fullscreen */
+.custom-right-toolbar button.tool-btn {
+  width: var(--tool-size) !important;
+  height: var(--tool-size) !important;
+
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 !important;
+  box-sizing: border-box;
+
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.custom-right-toolbar button.tool-btn:hover {
+  background-color: #f2f2f2;
+}
+
+.custom-right-toolbar .sym {
+  font-size: var(--custom-symbol-size);
+  font-weight: 900;
+  line-height: 1;
+  font-family: Arial, sans-serif;
+}
+
+/* =========================
+   Leaflet.Draw fixes
+   - single column
+   - remove section gap
+   - remove extra inner symbols
+   ========================= */
+
+/* force one column for draw toolbar */
+.custom-right-toolbar .leaflet-draw-toolbar {
+  display: flex !important;
+  flex-direction: column !important;
+  width: var(--tool-size) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* remove the big gap between draw and edit toolbars */
+.custom-right-toolbar .leaflet-draw-section {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* make draw/edit/delete buttons same size and hide extra inner text */
+.custom-right-toolbar .leaflet-draw-toolbar a {
+  width: var(--tool-size) !important;
+  height: var(--tool-size) !important;
+  line-height: var(--tool-size) !important;
+
+  margin: 0 !important;
+  border-radius: 4px !important;
+
+  /* hide any text that appears as extra marks */
+  text-indent: -9999px !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  font-size: 0 !important;
+
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* kill any pseudo elements that could show extra marks */
+.custom-right-toolbar .leaflet-draw-toolbar a::before,
+.custom-right-toolbar .leaflet-draw-toolbar a::after {
+  content: none !important;
+}
